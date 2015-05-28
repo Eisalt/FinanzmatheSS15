@@ -1,0 +1,382 @@
+\documentclass[]{scrartcl}
+\usepackage{hyperref}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{dsfont}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{nicefrac}
+\usepackage{enumitem}
+%\usepackage{paralist} %\begin{compactenum}[(i)] führt zu (i), (ii)
+\usepackage{lmodern}
+%\usepackage[garamond]{mathdesign}
+\usepackage[utopia]{mathdesign}
+
+
+\numberwithin{equation}{section}
+
+
+\theoremstyle{plain}
+\newtheorem{satz}{Satz}[section]
+\newtheorem{lem}[satz]{Lemma}
+\newtheorem{kor}[satz]{Korollar}
+\newtheorem{prop}[satz]{Proposition}
+\theoremstyle{definition}
+\newtheorem{defi}[satz]{Definition}
+\theoremstyle{remark}
+\newtheorem{bem}[satz]{Bemerkung}
+\newtheorem*{bemerkung}{Bemerkung}
+\newtheorem{bsp}[satz]{Beispiel}
+\theoremstyle{proof}
+\newtheorem*{bew}{Beweis}
+\makeatletter
+\g@addto@macro{\thm@space@setup}{\thm@headpunct{}}
+\makeatother
+\newtheorem*{frag}{Fragestellung:}
+
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\Abs}[1]{\lVert #1 \rVert}
+
+\newcommand{\N}{\mathbb{N}}
+\renewcommand{\wr}{(\Omega,\mathcal{F},\mathbb{P})}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\d}{\operatorname{d}}
+\newcommand{\call}{\operatorname{Call}}
+\renewcommand{\put}{\operatorname{Put}}
+\renewcommand{\L}{\operatorname{L}}
+\newcommand{\Ss}{\nicefrac{S_0^0}{S_1^0}}
+
+\newcommand{\epm}{Einperiodenmodell}
+\newcommand{\am}{Arbitragemöglichkeit}
+\newcommand{\af}{arbitragefrei}
+\newcommand{\amm}{Äquivalentes Martingal Maß}
+
+\title{Finanzmathematik in diskreter Zeit}
+\begin{document}
+	\addtocounter{section}{-1}
+	\section{Modellbildung und Einführung}
+	Modelliert werden sollen Handelsstrategien für Güter  auf einem Markt, z.B. Staatsanleihen, Aktien, \ldots
+	\begin{itemize}
+		\item das j-te Handelsgut  zur Zeit $t\geq 0$ hat Preis $S_t^j$
+		\item ein Händler hat zur Zeit $t\geq 0$ die Stückzahl $x_t^j\ (\phi_t^j)$ des j-ten Handelsgutes
+		\item der Wert des Portfolios zum Zeitpunkt $t\geq 0$ ist \[ x_t\cdot S_t=\sum_{j=1}^nx_t^jS_t^j\]
+		\item die Preise $S_t^j$ hängen vom Zufall ab, die Stückzahl $x_t^j$ kann der Händeler durch Kauf und Verkauf beeinflussen
+		\item $x_t^j$ muss nicht aus $\N$ sein; $t\mapsto\phi_t$ heißt Handelsstrategie
+	\end{itemize}
+	\begin{frag}\leavevmode
+		\begin{enumerate}
+			\item mit welcher Handelsstrategie werde ich sicher Reich?
+			\item Was ist der faire Preis einer Option?
+		\end{enumerate}
+	\end{frag}
+	\section{Das Einperiodenmodell}
+	Es gibt nur einen Hadelszeitpunkt $t=0$ und einen Abrechungszeitpunkt $t=1$.
+	\begin{defi}
+		Das \epm\ mit $d+1$ Basisgütern besteht aus 
+		\begin{itemize}
+			\item einem W-Raum $(\Omega,\mathcal{F},\mathbb{P})$
+			\item einem Preisvektor $S_0=(S_0^0,S_0^1,\ldots,S_0^d)\in\R^{d+1},\ S_0> 0$
+			\item ZVen  $S_1^1,\ldots,S_d^1:\Omega\to\R$ und einem nicht zufälligen $S_1^0> 0$, $S_t^0\ t\in\{0,1\}$ heißt Num\'eraire und ist risikolos
+			\item die Zahl $r> -1$ mit $S_1^0=(1+r)S_0^0$ heißt Zinssatz
+			\item das diskontierte \epm\ ergibt nich, wenn man $(S_t^0,\ldots,S_t^d)$ durch 
+			\[(\tilde{S}_0^d,\ldots,\tilde{S}_t^d):=(\nicefrac{S_t^0}{S_t^0},\ldots,\nicefrac{S_t^d}{S_t^0})\text{ für }t\in\{0,1\} \] ersetzt 
+		\end{itemize}
+	\end{defi}
+	\begin{bem}
+		$S_t^j<0$ ist meistens erlaubt, für $j\ge1$.
+	\end{bem}
+	\begin{defi}
+		Ein Portfolio im \epm\ ist ein Vektor  $x=(x^0,x^1,…,x^d)\in \R^{d+1}$ der Stückzahlen. $V_t(x)=x\cdot S_t$ ist der Wert des Portfolios zum Zeitpunkt $t\in\{0,1\}$.
+	\end{defi}
+	\begin{bem}\leavevmode
+		\begin{itemize}
+			\item $x^j\le0$ ist erlaubt
+			\item $x^0<0$ ist eine Kreditaufnahme in Höhe von $\abs{x^0}S^0$, \\Rückzahlung ist $S_1^0\abs{x^0}=(1+r)S^0_0\abs{x^0}$
+			\item $x^j<0$ ist ein Leerverkauf und muss mit $x^jS_1^j$ glattgestellt werden (short position)
+			\item $x^j>0$ long position
+		\end{itemize}
+	\end{bem}
+	\begin{defi}
+		Ein Portfolio $x\in\R^{d+1}$ im \epm\ heißt \am, falls gilt:
+		\begin{itemize}
+			\item $V_0(x)\equiv x\cdot S_0\le0$
+			\item $V_1(x)\equiv x\cdot S_1\ge 0$
+			\item $\P (x\cdot S_1>0)>0$
+		\end{itemize}
+	\end{defi}
+	Eine Grundannahme ist die Arbitragefreiheit, dies ist realistisch, da eine Arbitrage durch Ausnutzung verschwindet.
+	\begin{lem}
+		Sei $S_t$ ein \epm und $\tilde{S}_t$ das diskontierte \epm
+		\begin{enumerate}
+			\item sei $x$ ein Portfolio. Dann gilt \[x\text{ ist \am\ für }S_t\Longleftrightarrow x\text{ ist \am\ für }\tilde{S}_t\]
+			\item es sind äquivalent:
+			\begin{enumerate}
+				\item es existiert eine \am\ für $S_t$
+				\item es existiert eine \am\ für $\tilde{S}_t$
+				\item es existiert ein Portfolio $y\in\R^{d+1},\ c\in \R$ mit 
+				\begin{align}\label{1.1}
+					y\tilde{S}_0=c,\ y\tilde{S}_1\ge c\ \P f.s.,\ 
+				\end{align}
+				\item für alle $c\in\R$ gilt, es existiert ein $y\in\R^{d+1}$, so dass \ref{1.1} gilt
+			\end{enumerate}
+		\end{enumerate}
+	\end{lem}
+	\begin{bew}\leavevmode
+		\begin{enumerate}
+			\item klar, teil durch $S_0^0$
+			\item
+			\begin{itemize}[leftmargin=4.5em]
+				\item[(a) $\Leftrightarrow$ (b)] klar wegen (a)
+				\item[(b)\ \ $\Rightarrow$ (d)] sei $x$ ein \am\ und $c\in\R$. Setze
+				\begin{align*}
+					y^i&=
+					\begin{cases}
+					x^i &\text{für }i\ge 1\\
+					x^0+c-\tilde{V}_0(x) &\text{für } x=0 
+					\end{cases}\\
+					\Longrightarrow y\tilde S_0&=x\tilde S_0+(c-\tilde V_0(x))\tilde S_0^0=c
+					\intertext{und}
+					y\tilde{S}_1&=x\tilde S_1+(c-\tilde V_0(x))\tilde S_1^1\\
+					&=\tilde V_1(x)-\tilde V_-(x)+c\ge 0\ \P f.s.,\ \P (yS_1>0)>0\text{ wegen (b)}
+				\end{align*}
+				\item[(d)\ \ $\Rightarrow$ (c)] klar
+				\item[(c)\ \ $\Rightarrow$ (b)] erfülle nun $y$ (b). Setze
+				\begin{align*}
+					x^i&=
+					\begin{cases}
+					y^i&\text{für }i\ge 1\\
+					y^0-c&\text{für }i=0
+					\end{cases}\\
+					\intertext{Dann}
+					\tilde V_0(x)&=\tilde V_0(y)-c\tilde S_0^0=c-c=0
+					\intertext{und}
+					\tilde V_1(x)&=\tilde V_1(y)-c\tilde S_1^0\ge 0\ \P f.s.\text{ und }\ \P(\tilde V_1(x)>0)=\P(\tilde V_1(y)>c)>0
+				\end{align*}
+			\end{itemize}
+		\end{enumerate}
+		\qed
+	\end{bew}
+	\section{Der 1. Hauptsatz der Preistheorie im \epm}
+	\begin{defi}
+		Sei $(\Omega,\F)$ ein Messraum, $\mu$, $\nu$ Maße auf $(\Omega,\F)$. Man nennt $\mu$ absolut stetig bezüglich $\nu$ (schreibe $\mu\ll\nu$), falls gilt: Jede $\nu$-Nullmenge ist auch $\mu$-Nullmenge, d.h.\begin{align*}
+			\forall A\in\F\ \nu(A)=0\Rightarrow\mu(A)=0
+		\end{align*}
+		$\nu$ und $\mu$ sind äquivalent, falls $\nu\ll\mu$ und $\mu\ll\nu$.
+	\end{defi}
+	\begin{defi}
+		Seien $\mu$, $\nu$ Maße und $f\colon\Omega\to\R^+$ messbar. Man sagt, $\mu$ hat Dichte $f$ bezüglich $\nu$ wenn gilt:
+		\begin{align*}
+			\mu(A)=\int_Af(\omega)\nu(\operatorname{d}\omega),\ \forall A\in\F 
+		\end{align*}
+		schreibe $\d\mu=f\d\nu$ oder $f=\nicefrac{\d\mu}{\d\nu}$ oder $\mu=f\nu$.
+	\end{defi}
+	\begin{lem}
+		Seien $f$ und $g$ zwei Dichten von $\mu$ bezüglich $\nu$. Dann ist $f=g\ \nu$f.s. Falls also ein Dichte existiert, ist sie auch fast sicher eindeutig.
+	\end{lem}
+	\begin{bew}
+		Nach Vorraussetzung ist 
+		\begin{align*}
+			&\int_Af\d\nu=\mu(A)=\int_Ag\d \nu\\
+			\Longrightarrow&\int_A(fg)1_A\d\nu=0\ \forall A\in\F\\
+			\intertext{Mit}
+			A&=\{\omega\colon f(\omega)\ge g(\omega)\}\\
+			\intertext{folgt}
+			0&=\int(f-g)1_A\d\nu\\
+			\Longrightarrow&(f-g)1_{(f\ge g)}=0\ \nu f.s.
+		\end{align*}
+		Ebenso:
+		\begin{align*}
+			(f-g)1_{\{f<g \}}=0\ \nu f.s. \Longrightarrow \text{ Behauptung}
+		\end{align*}
+		\qed
+	\end{bew}
+	\begin{lem}
+		Falls $\mu=f\nu$, dann gilt $\mu\ll\nu$
+	\end{lem}
+	\begin{bemerkung}
+		Die Umkehrung gilt auch, falls $\mu$, $\nu$  $\sigma$-endlich sind.
+	\end{bemerkung}
+	\begin{defi}
+		Ein Maß $\mu$ heißt $\sigma$-endlich, wenn es $(A_n)_{n\in\N}\subset\F$ mit $\mu(A_n)<\infty$ und $\bigcup_nA_n=\Omega$ gibt.
+	\end{defi}
+	\begin{satz}[Radon-Nikodym]
+		Seien $\mu$ und $\nu$ zwei $\sigma$-endliche Maße, dann sind Äquivalent:
+		\begin{itemize}
+			\item $\mu$ hat ein Dichte bezüglich $\nu$
+			\item $\mu\ll\nu$
+		\end{itemize}
+	\end{satz}
+	\begin{prop}
+		Seien $\mu\ll\nu$, Dichte $f$, $\mu$ und $\nu$ $\sigma$-endlich. Dann gilt:
+		\begin{align*}
+			\mu\approx\nu\Longleftrightarrow f>0 \ \nu f.s.
+		\end{align*}
+		Falls $\mu\approx\nu$, dann ist $g=\nicefrac{1}{f}$ die Dichte von $\nu$ bezüglich $\mu$.
+	\end{prop}
+	\begin{bew}
+		$\Longleftarrow$:\\ Sei $f>0\ \nu f.s.$. Setze 
+		\begin{align*}
+			g=\mathds{1}_{\{f>0 \}}\nicefrac{1}{f}\Longrightarrow g=\nicefrac{1}{f}\ \nu f.s.
+		\end{align*}
+		Setze $\tilde{\nu}=g\mu$. Dann ist 
+		\begin{align*}
+			\tilde{\nu}=g\mu=gf\nu&\Longrightarrow\tilde{\nu}(A)=\int_Agf\d\nu=\int_A\mathds 1_{\{f>0 \}}\d\nu\qquad \forall A\in\F\\
+			\Longrightarrow\nu=\tilde{\nu}&\Longrightarrow\nu\ll\mu\text{ Dichte }\nicefrac{1}{f}
+		\end{align*}
+		$\Longrightarrow$:\\ Sei $\mu\approx\nu$ und Satz 2.6. Setze $\nu=g\mu$. Dann:
+		\begin{align*}
+			\nu&=g\mu=gf
+			\intertext{ also }
+			\int_A1\d\nu&=\int_Agf\d\nu\qquad\forall A\in\F\\
+			\Longrightarrow gf&=1\ \nu f.s.\longrightarrow f>0\ \nu f.s. \text{ und } g=\nicefrac{1}{f}\ \nu f.s.
+		\end{align*}
+	\end{bew}
+	\section{Preisbestimmung von Kontrakten im \epm}
+	\setcounter{satz}{14}
+	\begin{defi}
+		Die Intervallgrenzen $\pi_{\inf}(\xi):=\inf\Pi(\xi)$ und $\pi_{\sup}(\xi):=\sup\Pi(\xi)$ heißen Arbitragegrenzen für $\xi$.
+	\end{defi}
+	\begin{bem}
+		Bestimmung von Arbitragegrenzen ist oft schwierig, denn man muss in $\tilde{\Pi}$ alle \amm e kennen. Falls man $\P$ nicht vorher festlegt, werden diese Grenzen trivial. 
+	\end{bem}
+	\begin{bsp}
+		Sei $(\Omega,\F,\P)$ ein \af\ \epm\ $(S^0,…,S^d)$ und $r=0$. Sei 
+		\begin{align*}
+			s_i^j\ge 0\ P\ f.s.\text{ und }S^0_1=(1+r)S_0^0
+		\end{align*}
+		Für $K>0$ sei 
+		\begin{align*} 
+			\call(K,1,i)(\omega)=(S_1^i(\omega)-K)_+ \end{align*} 
+			Wegen $S_1^i\ge$ ist 
+		\begin{align*}
+			\call(K,1,i)&\le S_1^i\ \P f.s.\\
+			\intertext{daraus folgt, dass für alle Äquivalenten Martingalmaße $\mu$ gilt} 
+			\mu:\E_{\mu}(\call(K,1,i))&\le\E_{\mu}(S_1^i)=S_0^i\\ 
+			\Longrightarrow\pi_{\sup}(\call(K,1,i))&\le S_0^i 
+		\end{align*} 
+		das heißt eine Call Option darf nie mehr kosten als das Underlying.\\
+		Für Schranken an $\pi_{inf}(\call(K,1,i))$ gilt: 
+		\begin{align*}
+			\E_{\mu}(\call(K,1,i))=\E_{\mu}((S_1^i-K)_+)\overset{\footnote{Jensen Ungleichung}}{\ge} (\E_{\mu}(S_1^i)-K)_+=(S_0^i-K)_+ 
+		\end{align*} 
+		eine Call Option darf nie billiger sein als Aktienpreis minus abdiskontiertem Strike-Preis.\\
+		Put-Option:\\
+		\begin{align*}
+			(\nicefrac{K}{1+r}-S_0^i)\le\pi_{\inf}(\put(K,i,1))\le\pi_{\sup}(\put(K,i,1))\le\nicefrac{K}{1+r}
+		 \end{align*}
+ 	\end{bsp}
+ 	\begin{satz}
+ 		$(S^1,…,S^{d+1})$ sei ein \epm, Kontrakte $\xi^1,…,\xi^n\ n\ge2$ . Die Preise $\pi_i=\pi(\xi^i)$ seien so gewählt, dass das Modell $(S^0,…,S^d,S^{d+1},…,S^{d+n})$ mit $S^{d+i}_0=\pi_i, S^{d+i}_1=\xi^i$ \af\ ist. Dann gilt:
+ 		\begin{itemize}
+ 			 	\item Falls $\xi^i\le\xi^j\ \P f.s.$, dann ist auch $\pi_i\le\pi_j\ \P f.s.$
+ 			 	\item Der Kontrakt $(\xi^i\pm\xi^j) $ ist replizierbar in $(S^0,…,S^{d+n})$ mit $\hat{\pi}(\xi^i\pm\xi^j)=\pi(\xi^i)\pm\pi(\xi^j)$ 
+ 		\end{itemize}
+ 	\end{satz}
+ 	\begin{bew}\leavevmode
+ 		\begin{itemize}
+ 			\item[b)] Da $(S^0,…,S^{d+n})$ \af \ ist, existiert ein \amm\ $\mu$ 
+ 			\begin{align*}
+	 			\Longrightarrow\pi(\xi^i)=S^i_0=\nicefrac{S^0_0}{S^0_1}\E_{\mu}(S_1^1)=\nicefrac{S^0_0}{S^0_1}\E_{\mu}(\xi^i)\ \forall i\le n 
+	 		\end{align*} 
+	 		und \begin{align*}
+		 		\hat{\pi}(\xi^i\pm\xi^j)=(3.1bzw3.7)=\nicefrac{S_0^0}{S_1^0}\E_{\mu}(\xi^i\pm\xi^j)=\Pi(\xi^i)\pm\Pi(\xi^j)=\Pi_i\pm\Pi_j 
+		 	\end{align*} 
+		 	denn $\xi^i\pm\xi^j$ ist replizierbar mit Portfolio $x=(0,…,0,1d+i,0,…,0,\pm1d+j,0,…,0)$ $\Longrightarrow b$
+ 			\item[a)] 
+	 		\begin{align*}
+		 		\Pi(\xi^j)-\Pi(\xi^i)=(b) \hat{\Pi}(\xi^j-\xi^i)=\nicefrac{S_0^0}{S_1^0}\E_{\mu}(\xi^j-\xi^i)\ge 0 
+		 	\end{align*}
+		 	\qed
+ 		\end{itemize}
+ 	\end{bew}
+ 	\begin{kor}
+ 		Im \af en  \epm \ sei $\pi(\call(K,1,i))$ ein begiebiger \af er  Preis für $\call(K,1,i)$. Dann gilt
+ 		\begin{align*}
+		 	\pi(\call (K,1,i))=S_0^i-\nicefrac{S_0^0}{S_1^0}K+\pi(\put (K,1,i))\qquad\text{Put-Call Parität} 
+		 \end{align*} 
+		 das heißt ein eimal festgelegter Peis von Call bestimmt den Peis von Put und umgekehrt
+ 	\end{kor}
+ 	\begin{bew}
+ 		\begin{align*}
+	 		\put(K,1,i)=(K-S_1^i)_+
+		 \end{align*}
+		 \begin{align*}
+			 \call(K,1,i)=(S^i_1-K)_+=(K-S_1^i)_++S_1^i-K=\put(K,1,i)+S_1^i-K 
+		\end{align*} 
+ 		Sei $\mu(\call)$ ein  \af er Preis. Dann folgt mit 3.18b und $\xi^1=S^i_1,\ \xi^2=\call$ das \begin{align*}
+	 		\Pi(\put(K,1,i))=\Pi(\call(K,1,i))-\pi(S^i_1)+\pi(K)
+	 	\end{align*} 
+	 	mit $\pi(K)=\nicefrac{S_0^0}{S_1^0}K$. \qed
+ 	\end{bew}
+ 	\section{Der 2. Hauptsatz der Preistheorie im \epm}
+ 	Wir wissen:
+ 	\begin{itemize}
+ 		\item Wenn der Markt vollständig ist, dann ist nach def 3.11 jeder Kontrakt replizierbar und dies ist äquivalent dazu, dass es für jeden Kontrakt genau einen \af en Preis gibt
+ 		\item Für $\xi\in\mathcal{H}$ und für jedes Martingalmaß $\mu$ ist $\hat{\Pi}(\xi)=\nicefrac{S_0^0}{S_1^0}\E_{\mu}(\xi)$ nach satz 3.7
+ 		\item Die Menge aller \af \ Preise für $\xi$ ergibt sich aus der Menge aller \amm e bezüglich $(S^0,…,S^d)$ mittles $\Pi(\xi)=\nicefrac{S_0^0}{S_1^0}\E_{\mu}(\xi)$
+ 	\end{itemize}
+ 	Das legt folgeden Zussammenhang nahe
+ 	\begin{satz}
+ 		In jedem \af en\ \epm\ sind äquivalent:
+ 		\begin{itemize}
+ 			\item $\Huge=\operatorname{L}^0(\Omega,\F,\P)$, das Modell ist vollständig
+ 			\item es existiert genau ein \amm
+ 		\end{itemize}
+ 	\end{satz}
+ 	Die Hauptarbeite für den Beweis steckt in folgendem Lemma.
+ 	\begin{lem}
+ 		Gegeben sei ein \af es \epm\ $(S^0,…,S^d)$ und ein Kontrakt $\xi\in\L^0(\Omega,\F,\P)$. Setze $Y^i:=\tilde{S}^i_1-\tilde S_0^i$ diskontierter Gewinn mit Basisgut i, $Y=(Y^0,…,Y^d)$. Dann ist 
+ 		\begin{align*}
+ 			\pi_{\operatorname{inf}}&=\operatorname{max}\{m\in [-\infty,\infty): \exists x \in \R^{d+1} \text{ mit }m+xY(\omega)\le\nicefrac{S^0_0}{S^0_1}\xi(\omega)\ \P f.s. \}\\
+ 			\pi_{\operatorname{sup}}&=\operatorname{min}\{m\in (-\infty,\infty]: \exists x \in \R^{d+1} \text{ mit }m+xY(\omega)\ge\nicefrac{S^0_0}{S^0_1}\xi(\omega)\ \P f.s. \}
+ 		\end{align*}
+ 		wobei
+ 		\begin{align*}
+ 			\pi_{\inf}(\xi)=\inf\Pi(\xi)==\inf\{\text{\af\ Preis für }\xi \}=\inf\{\Ss\E_{\mu}(\xi):\mu\text{ ist \amm},\ \E_{\mu}(|\xi|)<\infty \}
+ 		\end{align*}
+ 		mit $m=$ Preisvorschlag, $xY=$ Gewinn mit dem Portfolio $x$, $\Ss\xi(\omega)=$ abdiskontierter Gewinn mit dem Kontrakt.
+ 	\end{lem}
+ 	\begin{bemerkung}
+ 	 	Wir nennen die erste Menge $A_-$ und die zweite $A_+$, jeweils nur die Menge nicht deren Maxima oder Minima.
+ 	 \end{bemerkung}
+ 	 Interpretation: \\Als Verkäufer kassiert man den Preis $m$ und verkauft den Kontrakt $\xi$. Beim Marktgeschehen $\omega\in\Omega$ ergibt sich ein Gewinn/Verlust der Höhe $m-\Ss\xi(\omega)$. Falls nun $m\in A_-$, so hätte man auch ein Portfolio $-x$ anlegen können und damit den Gewinn/Verlust $-xY\ge m-\Ss\xi(\omega)$ machen können, egal was $\omega$ ist, daher war der Preis $m$ zu niedrig, da eine \am besteht.\\ \\
+ 	 Aussage des Lemma: \\ Die Ränder der Mengen $A_-$ und $A_+$ sind Arbitragegrenzen, zwischen welchen der Preis Liegen muss, um nicht zu hoch oder zu niedrig zu sein.
+ 	 \begin{bew}[Lemma 2.4]
+ 	 	Wegen $\pi_{\sup}(\xi)=-\pi_{\inf}(-\xi)$ und $A_+(\xi)=-A_-(-\xi)$ reicht es, die Aussage für $\pi_{\sup}$ zu zeigen
+ 	 	\begin{enumerate}
+ 	 		\item $\pi_{\sup}(\xi)\le\inf A_+(\xi):$ Sei $m\in A_+$ und $x\in\R^{d+1}$ mit $m+xY\ge\Ss\xi\ \P f.s.$. Für jedes \amm $\mu$ mit $\E(|\xi|)<\infty$ ist, wegen $\mu$ Martingalmaß
+ 	 		\begin{align*}
+ 	 			\Ss\E_{\mu}(\xi)\le m+\E_{\mu}(xY)=m+x\E_{\mu}(Y)=m\Longrightarrow \sup\Pi(\xi)\le m\ \forall m\in A_+
+ 	 		\end{align*}
+ 	 		Bilden des $\inf$ über $m\in A_+$ liefert die Behauptung
+ 	 		\item $\pi_{\sup}(\xi)=\inf A_+(\xi)$: Falls $\pi_{\sup}(\xi)=\infty$, dann ist $\pi_{\sup}(\xi)=\inf A_+(\xi)$ nach 1). Sei nun $\pi_{\sup}(\xi)<\infty$ und $m>\pi_{\sup}(\xi)$. Zu Zeigen ist $m\in A_+(\xi)$. Wegen $m\notin\Pi(\xi)$ gibt es im Modell $(S^0,…,S^d,S^{d+1})$ mit $S^{d+1}_0=m,\ S^{d+1}_1=\xi$ eine \am, das heißt 
+ 	 		\begin{align*}
+ 	 			\exists(x,x_{d+1})\in \R^{d+1}x\R\intertext{mit}
+ 	 			xY(\omega)+x_{d+1}(\Ss\xi(\omega)-m)\ge 0\ \P f.s.\label{*1}\\
+ 	 			\P(xY(\omega)+x_{d+1}(\Ss\xi(\omega)-m)>0)>0
+ 	 		\end{align*}
+ 	 		Hierbei ist $x_{d+1}\neq 0$, sonst wäre $(S^0,…,S^d)$ nicht \af: Außerdem ist $x_{d+1}\le 0$. denn für jedes \amm\ $\mu$ im Modell $( )$ mit $\E_{\mu}(|\xi|)<\infty$ gilt
+ 	 		\begin{align*}
+ 	 			0\le\ref{*1}\E_{\mu}(xY+x_{d+1}(\Ss\xi-m))=x_{d+1}(\Ss\E_{\mu}(\xi)-m)\Longrightarrow x_{d+1}\le 0
+ 	 		\end{align*}
+ 	 		Also ist $x_{d+1}<0$ und mit $z=-\nicefrac{1}{x_{d+1}}x\in\R^{d+1}$ gilt 
+ 	 		\begin{align*}
+ 	 			zY+m=-\nicefrac{1}{x_{d+1}}xY+m\ge\ref{*1}\Ss\xi\ \P f.s.\Longrightarrow m\in A_+(\xi)
+ 	 		\end{align*}
+ 	 		\item Zu Zeigen bleibt $\inf A_+(\xi)=\operatorname{min}A_+(\xi)$.\\
+ 	 		Für  $\pi_{\sup}(\xi)=\infty$ ist das klar, da $\infty\in A_+(\xi)$. Für $\pi_{\sup}(\xi)\infty$ sei $m_n\subset A_+$, mit $\lim_{n\to\infty}m_n=\inf A_+=\pi_{\sup}(\xi)$. Zu jedem $m_n$ wähle $x^{(n)}\in\R^{d+1}$ mit $m_n+x^{(n)}Y\ge\Ss\xi\ \P f.s.$. Wegen $y^0=\tilde S^0_1-S^0_0=1-1=0$ kann man $x^{(n)}_0=0$ wählen. Das tun wir.
+ 	 		\begin{enumerate}
+ 	 			\item 1.Fall $\operatorname{liminf}_{n\to\infty}|x^{(n)}|<\infty$, das heißt es existiert eine konvergente Teilfolge $x^{(n_k)}$, setze $x:=\lim_{k\to\infty}x^{(n_k)}$. Dann ist $\Ss\xi\le m_{n_k}+x^{n_k}Y\overset{k\to\infty}{\longrightarrow}\pi_{\sup}(\xi)+xY\Longrightarrow \pi_{\sup}(\xi)\in A_+$
+ 	 			\item 2.Fall $\lim_{n\to\infty}|x^{(n)}|=\infty$. Dann existiert ein $n_0\in\N$ so dann $x^{(n)}>0 $ $\forall n>n_0$. Setze $z^{(n)}=\nicefrac{x^{(n)}}{|x^{(n)}|}$, dann ist $|z^{(n)}|=1$ daraus folgt, dass ein konvergente Teilfolge $z^{(n_k)}$ existiert mit $z:=\lim_{k\to\infty}z^{(n_k)},\ |z|=1,\ z_0=0$
+ 	 			\begin{align*}
+ 	 				0+zY=\lim_{k_to\infty}(\nicefrac{m_{n_k}}{|x^{(n_k)}|}+z^{(n_k)}Y)\ge\lim_{k\to\infty}\nicefrac{1}{|x^(n_k)|}\Ss\xi=0
+ 	 			\end{align*}
+ 	 			Wegen $(S^0,…,S^d)$ \af impliziert $zY\ge 0\ \P f.s.$ das $zY=0\ \P f.s.$
+ 	 		\end{enumerate}
+ 	 		 	 	\end{enumerate}
+ 	 \end{bew}
+\end{document}
