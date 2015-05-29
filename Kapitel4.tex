@@ -1,0 +1,67 @@
+ 	\section{Der 2. Hauptsatz der Preistheorie im \epm}
+ 	Wir wissen:
+ 	\begin{itemize}
+ 		\item Wenn der Markt vollständig ist, dann ist nach def 3.11 jeder Kontrakt replizierbar und dies ist äquivalent dazu, dass es für jeden Kontrakt genau einen \af en Preis gibt
+ 		\item Für $\xi\in\mathcal{H}$ und für jedes Martingalmaß $\mu$ ist $\hat{\Pi}(\xi)=\nicefrac{S_0^0}{S_1^0}\E_{\mu}(\xi)$ nach satz 3.7
+ 		\item Die Menge aller \af \ Preise für $\xi$ ergibt sich aus der Menge aller \amm e bezüglich $(S^0,…,S^d)$ mittles $\Pi(\xi)=\nicefrac{S_0^0}{S_1^0}\E_{\mu}(\xi)$
+ 	\end{itemize}
+ 	Das legt folgeden Zussammenhang nahe
+ 	\begin{satz}
+ 		In jedem \af en\ \epm\ sind äquivalent:
+ 		\begin{itemize}
+ 			\item $\Huge=\operatorname{L}^0(\Omega,\F,\P)$, das Modell ist vollständig
+ 			\item es existiert genau ein \amm
+ 		\end{itemize}
+ 	\end{satz}
+ 	Die Hauptarbeite für den Beweis steckt in folgendem Lemma.
+ 	\begin{lem}
+ 		Gegeben sei ein \af es \epm\ $(S^0,…,S^d)$ und ein Kontrakt $\xi\in\L^0(\Omega,\F,\P)$. Setze $Y^i:=\tilde{S}^i_1-\tilde S_0^i$ diskontierter Gewinn mit Basisgut i, $Y=(Y^0,…,Y^d)$. Dann ist 
+ 		\begin{align*}
+ 			\pi_{\operatorname{inf}}&=\operatorname{max}\{m\in [-\infty,\infty): \exists x \in \R^{d+1} \text{ mit }m+xY(\omega)\le\nicefrac{S^0_0}{S^0_1}\xi(\omega)\ \P f.s. \}\\
+ 			\pi_{\operatorname{sup}}&=\operatorname{min}\{m\in (-\infty,\infty]: \exists x \in \R^{d+1} \text{ mit }m+xY(\omega)\ge\nicefrac{S^0_0}{S^0_1}\xi(\omega)\ \P f.s. \}
+ 		\end{align*}
+ 		wobei
+ 		\begin{align*}
+ 			\pi_{\inf}(\xi)=\inf\Pi(\xi)==\inf\{\text{\af\ Preis für }\xi \}=\inf\{\Ss\E_{\mu}(\xi):\mu\text{ ist \amm},\ \E_{\mu}(|\xi|)<\infty \}
+ 		\end{align*}
+ 		mit $m=$ Preisvorschlag, $xY=$ Gewinn mit dem Portfolio $x$, $\Ss\xi(\omega)=$ abdiskontierter Gewinn mit dem Kontrakt.
+ 	\end{lem}
+ 	\begin{bemerkung}
+ 	 	Wir nennen die erste Menge $A_-$ und die zweite $A_+$, jeweils nur die Menge nicht deren Maxima oder Minima.
+ 	 \end{bemerkung}
+ 	 Interpretation: \\Als Verkäufer kassiert man den Preis $m$ und verkauft den Kontrakt $\xi$. Beim Marktgeschehen $\omega\in\Omega$ ergibt sich ein Gewinn/Verlust der Höhe $m-\Ss\xi(\omega)$. Falls nun $m\in A_-$, so hätte man auch ein Portfolio $-x$ anlegen können und damit den Gewinn/Verlust $-xY\ge m-\Ss\xi(\omega)$ machen können, egal was $\omega$ ist, daher war der Preis $m$ zu niedrig, da eine \am besteht.\\ \\
+ 	 Aussage des Lemma: \\ Die Ränder der Mengen $A_-$ und $A_+$ sind Arbitragegrenzen, zwischen welchen der Preis Liegen muss, um nicht zu hoch oder zu niedrig zu sein.
+ 	 \begin{bew}[Lemma 2.4]
+ 	 	Wegen $\pi_{\sup}(\xi)=-\pi_{\inf}(-\xi)$ und $A_+(\xi)=-A_-(-\xi)$ reicht es, die Aussage für $\pi_{\sup}$ zu zeigen
+ 	 	\begin{enumerate}
+ 	 		\item $\pi_{\sup}(\xi)\le\inf A_+(\xi):$ Sei $m\in A_+$ und $x\in\R^{d+1}$ mit $m+xY\ge\Ss\xi\ \P f.s.$. Für jedes \amm $\mu$ mit $\E(|\xi|)<\infty$ ist, wegen $\mu$ Martingalmaß
+ 	 		\begin{align*}
+ 	 			\Ss\E_{\mu}(\xi)\le m+\E_{\mu}(xY)=m+x\E_{\mu}(Y)=m\Longrightarrow \sup\Pi(\xi)\le m\ \forall m\in A_+
+ 	 		\end{align*}
+ 	 		Bilden des $\inf$ über $m\in A_+$ liefert die Behauptung
+ 	 		\item $\pi_{\sup}(\xi)=\inf A_+(\xi)$: Falls $\pi_{\sup}(\xi)=\infty$, dann ist $\pi_{\sup}(\xi)=\inf A_+(\xi)$ nach 1). Sei nun $\pi_{\sup}(\xi)<\infty$ und $m>\pi_{\sup}(\xi)$. Zu Zeigen ist $m\in A_+(\xi)$. Wegen $m\notin\Pi(\xi)$ gibt es im Modell $(S^0,…,S^d,S^{d+1})$ mit $S^{d+1}_0=m,\ S^{d+1}_1=\xi$ eine \am, das heißt 
+ 	 		\begin{align*}
+ 	 			\exists(x,x_{d+1})\in \R^{d+1}x\R\intertext{mit}
+ 	 			xY(\omega)+x_{d+1}(\Ss\xi(\omega)-m)\ge 0\ \P f.s.\label{*1}\\
+ 	 			\P(xY(\omega)+x_{d+1}(\Ss\xi(\omega)-m)>0)>0
+ 	 		\end{align*}
+ 	 		Hierbei ist $x_{d+1}\neq 0$, sonst wäre $(S^0,…,S^d)$ nicht \af: Außerdem ist $x_{d+1}\le 0$. denn für jedes \amm\ $\mu$ im Modell $( )$ mit $\E_{\mu}(|\xi|)<\infty$ gilt
+ 	 		\begin{align*}
+ 	 			0\le\ref{*1}\E_{\mu}(xY+x_{d+1}(\Ss\xi-m))=x_{d+1}(\Ss\E_{\mu}(\xi)-m)\Longrightarrow x_{d+1}\le 0
+ 	 		\end{align*}
+ 	 		Also ist $x_{d+1}<0$ und mit $z=-\nicefrac{1}{x_{d+1}}x\in\R^{d+1}$ gilt 
+ 	 		\begin{align*}
+ 	 			zY+m=-\nicefrac{1}{x_{d+1}}xY+m\ge\ref{*1}\Ss\xi\ \P f.s.\Longrightarrow m\in A_+(\xi)
+ 	 		\end{align*}
+ 	 		\item Zu Zeigen bleibt $\inf A_+(\xi)=\operatorname{min}A_+(\xi)$.\\
+ 	 		Für  $\pi_{\sup}(\xi)=\infty$ ist das klar, da $\infty\in A_+(\xi)$. Für $\pi_{\sup}(\xi)\infty$ sei $m_n\subset A_+$, mit $\lim_{n\to\infty}m_n=\inf A_+=\pi_{\sup}(\xi)$. Zu jedem $m_n$ wähle $x^{(n)}\in\R^{d+1}$ mit $m_n+x^{(n)}Y\ge\Ss\xi\ \P f.s.$. Wegen $y^0=\tilde S^0_1-S^0_0=1-1=0$ kann man $x^{(n)}_0=0$ wählen. Das tun wir.
+ 	 		\begin{enumerate}
+ 	 			\item 1.Fall $\operatorname{liminf}_{n\to\infty}|x^{(n)}|<\infty$, das heißt es existiert eine konvergente Teilfolge $x^{(n_k)}$, setze $x:=\lim_{k\to\infty}x^{(n_k)}$. Dann ist $\Ss\xi\le m_{n_k}+x^{n_k}Y\overset{k\to\infty}{\longrightarrow}\pi_{\sup}(\xi)+xY\Longrightarrow \pi_{\sup}(\xi)\in A_+$
+ 	 			\item 2.Fall $\lim_{n\to\infty}|x^{(n)}|=\infty$. Dann existiert ein $n_0\in\N$ so dann $x^{(n)}>0 $ $\forall n>n_0$. Setze $z^{(n)}=\nicefrac{x^{(n)}}{|x^{(n)}|}$, dann ist $|z^{(n)}|=1$ daraus folgt, dass ein konvergente Teilfolge $z^{(n_k)}$ existiert mit $z:=\lim_{k\to\infty}z^{(n_k)},\ |z|=1,\ z_0=0$
+ 	 			\begin{align*}
+ 	 				0+zY=\lim_{k_to\infty}(\nicefrac{m_{n_k}}{|x^{(n_k)}|}+z^{(n_k)}Y)\ge\lim_{k\to\infty}\nicefrac{1}{|x^(n_k)|}\Ss\xi=0
+ 	 			\end{align*}
+ 	 			Wegen $(S^0,…,S^d)$ \af impliziert $zY\ge 0\ \P f.s.$ das $zY=0\ \P f.s.$
+ 	 		\end{enumerate}
+ 	 		 	 	\end{enumerate}
+ 	 \end{bew}

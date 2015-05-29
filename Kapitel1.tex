@@ -1,0 +1,87 @@
+	\section{Das Einperiodenmodell}
+	Es gibt nur einen Hadelszeitpunkt $t=0$ und einen Abrechungszeitpunkt $t=1$.
+	\begin{defi}
+		Das \epm\ mit $d+1$ Basisgütern besteht aus 
+		\begin{itemize}
+			\item einem W-Raum $(\Omega,\mathcal{F},\mathbb{P})$
+			\item einem Preisvektor $S_0=(S_0^0,S_0^1,\ldots,S_0^d)\in\R^{d+1},\ S_0> 0$
+			\item ZVen  $S_1^1,\ldots,S_d^1:\Omega\to\R$ und einem nicht zufälligen $S_1^0> 0$, $S_t^0\ t\in\{0,1\}$ heißt Num\'eraire und ist risikolos
+			\item die Zahl $r> -1$ mit $S_1^0=(1+r)S_0^0$ heißt Zinssatz
+			\item das diskontierte \epm\ ergibt nich, wenn man $(S_t^0,\ldots,S_t^d)$ durch 
+			\[(\tilde{S}_0^d,\ldots,\tilde{S}_t^d):=(\nicefrac{S_t^0}{S_t^0},\ldots,\nicefrac{S_t^d}{S_t^0})\text{ für }t\in\{0,1\} \] ersetzt 
+		\end{itemize}
+	\end{defi}
+	\begin{bem}
+		$S_t^j<0$ ist meistens erlaubt, für $j\ge1$.
+	\end{bem}
+	\begin{defi}
+		Ein Portfolio im \epm\ ist ein Vektor  $x=(x^0,x^1,…,x^d)\in \R^{d+1}$ der Stückzahlen. $V_t(x)=x\cdot S_t$ ist der Wert des Portfolios zum Zeitpunkt $t\in\{0,1\}$.
+	\end{defi}
+	\begin{bem}\leavevmode
+		\begin{itemize}
+			\item $x^j\le0$ ist erlaubt
+			\item $x^0<0$ ist eine Kreditaufnahme in Höhe von $\abs{x^0}S^0$, \\Rückzahlung ist $S_1^0\abs{x^0}=(1+r)S^0_0\abs{x^0}$
+			\item $x^j<0$ ist ein Leerverkauf und muss mit $x^jS_1^j$ glattgestellt werden (short position)
+			\item $x^j>0$ long position
+		\end{itemize}
+	\end{bem}
+	\begin{defi}
+		Ein Portfolio $x\in\R^{d+1}$ im \epm\ heißt \am, falls gilt:
+		\begin{itemize}
+			\item $V_0(x)\equiv x\cdot S_0\le0$
+			\item $V_1(x)\equiv x\cdot S_1\ge 0$
+			\item $\P (x\cdot S_1>0)>0$
+		\end{itemize}
+	\end{defi}
+	Eine Grundannahme ist die Arbitragefreiheit, dies ist realistisch, da eine Arbitrage durch Ausnutzung verschwindet.
+	\begin{lem}
+		Sei $S_t$ ein \epm und $\tilde{S}_t$ das diskontierte \epm
+		\begin{enumerate}
+			\item sei $x$ ein Portfolio. Dann gilt \[x\text{ ist \am\ für }S_t\Longleftrightarrow x\text{ ist \am\ für }\tilde{S}_t\]
+			\item es sind äquivalent:
+			\begin{enumerate}
+				\item es existiert eine \am\ für $S_t$
+				\item es existiert eine \am\ für $\tilde{S}_t$
+				\item es existiert ein Portfolio $y\in\R^{d+1},\ c\in \R$ mit 
+				\begin{align}\label{1.1}
+					y\tilde{S}_0=c,\ y\tilde{S}_1\ge c\ \P f.s.,\ 
+				\end{align}
+				\item für alle $c\in\R$ gilt, es existiert ein $y\in\R^{d+1}$, so dass \ref{1.1} gilt
+			\end{enumerate}
+		\end{enumerate}
+	\end{lem}
+	\begin{bew}\leavevmode
+		\begin{enumerate}
+			\item klar, teil durch $S_0^0$
+			\item
+			\begin{itemize}[leftmargin=4.5em]
+				\item[(a) $\Leftrightarrow$ (b)] klar wegen (a)
+				\item[(b)\ \ $\Rightarrow$ (d)] sei $x$ ein \am\ und $c\in\R$. Setze
+				\begin{align*}
+					y^i&=
+					\begin{cases}
+					x^i &\text{für }i\ge 1\\
+					x^0+c-\tilde{V}_0(x) &\text{für } x=0 
+					\end{cases}\\
+					\Longrightarrow y\tilde S_0&=x\tilde S_0+(c-\tilde V_0(x))\tilde S_0^0=c
+					\intertext{und}
+					y\tilde{S}_1&=x\tilde S_1+(c-\tilde V_0(x))\tilde S_1^1\\
+					&=\tilde V_1(x)-\tilde V_-(x)+c\ge 0\ \P f.s.,\ \P (yS_1>0)>0\text{ wegen (b)}
+				\end{align*}
+				\item[(d)\ \ $\Rightarrow$ (c)] klar
+				\item[(c)\ \ $\Rightarrow$ (b)] erfülle nun $y$ (b). Setze
+				\begin{align*}
+					x^i&=
+					\begin{cases}
+					y^i&\text{für }i\ge 1\\
+					y^0-c&\text{für }i=0
+					\end{cases}\\
+					\intertext{Dann}
+					\tilde V_0(x)&=\tilde V_0(y)-c\tilde S_0^0=c-c=0
+					\intertext{und}
+					\tilde V_1(x)&=\tilde V_1(y)-c\tilde S_1^0\ge 0\ \P f.s.\text{ und }\ \P(\tilde V_1(x)>0)=\P(\tilde V_1(y)>c)>0
+				\end{align*}
+			\end{itemize}
+		\end{enumerate}
+		\qed
+	\end{bew}

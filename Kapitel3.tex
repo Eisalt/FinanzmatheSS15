@@ -1,0 +1,77 @@
+	\section{Preisbestimmung von Kontrakten im \epm}
+	\setcounter{satz}{14} % das muss entfert werden, wenn man hier ankommt
+	\begin{defi}
+		Die Intervallgrenzen $\pi_{\inf}(\xi):=\inf\Pi(\xi)$ und $\pi_{\sup}(\xi):=\sup\Pi(\xi)$ heißen Arbitragegrenzen für $\xi$.
+	\end{defi}
+	\begin{bem}
+		Bestimmung von Arbitragegrenzen ist oft schwierig, denn man muss in $\tilde{\Pi}$ alle \amm e kennen. Falls man $\P$ nicht vorher festlegt, werden diese Grenzen trivial. 
+	\end{bem}
+	\begin{bsp}
+		Sei $(\Omega,\F,\P)$ ein \af\ \epm\ $(S^0,…,S^d)$ und $r=0$. Sei 
+		\begin{align*}
+			s_i^j\ge 0\ P\ f.s.\text{ und }S^0_1=(1+r)S_0^0
+		\end{align*}
+		Für $K>0$ sei 
+		\begin{align*} 
+			\call(K,1,i)(\omega)=(S_1^i(\omega)-K)_+ \end{align*} 
+			Wegen $S_1^i\ge$ ist 
+		\begin{align*}
+			\call(K,1,i)&\le S_1^i\ \P f.s.\\
+			\intertext{daraus folgt, dass für alle Äquivalenten Martingalmaße $\mu$ gilt} 
+			\mu:\E_{\mu}(\call(K,1,i))&\le\E_{\mu}(S_1^i)=S_0^i\\ 
+			\Longrightarrow\pi_{\sup}(\call(K,1,i))&\le S_0^i 
+		\end{align*} 
+		das heißt eine Call Option darf nie mehr kosten als das Underlying.\\
+		Für Schranken an $\pi_{inf}(\call(K,1,i))$ gilt: 
+		\begin{align*}
+			\E_{\mu}(\call(K,1,i))=\E_{\mu}((S_1^i-K)_+)\overset{\footnote{Jensen Ungleichung}}{\ge} (\E_{\mu}(S_1^i)-K)_+=(S_0^i-K)_+ 
+		\end{align*} 
+		eine Call Option darf nie billiger sein als Aktienpreis minus abdiskontiertem Strike-Preis.\\
+		Put-Option:\\
+		\begin{align*}
+			(\nicefrac{K}{1+r}-S_0^i)\le\pi_{\inf}(\put(K,i,1))\le\pi_{\sup}(\put(K,i,1))\le\nicefrac{K}{1+r}
+		 \end{align*}
+ 	\end{bsp}
+ 	\begin{satz}
+ 		$(S^1,…,S^{d+1})$ sei ein \epm, Kontrakte $\xi^1,…,\xi^n\ n\ge2$ . Die Preise $\pi_i=\pi(\xi^i)$ seien so gewählt, dass das Modell $(S^0,…,S^d,S^{d+1},…,S^{d+n})$ mit $S^{d+i}_0=\pi_i, S^{d+i}_1=\xi^i$ \af\ ist. Dann gilt:
+ 		\begin{itemize}
+ 			 	\item Falls $\xi^i\le\xi^j\ \P f.s.$, dann ist auch $\pi_i\le\pi_j\ \P f.s.$
+ 			 	\item Der Kontrakt $(\xi^i\pm\xi^j) $ ist replizierbar in $(S^0,…,S^{d+n})$ mit $\hat{\pi}(\xi^i\pm\xi^j)=\pi(\xi^i)\pm\pi(\xi^j)$ 
+ 		\end{itemize}
+ 	\end{satz}
+ 	\begin{bew}\leavevmode
+ 		\begin{itemize}
+ 			\item[b)] Da $(S^0,…,S^{d+n})$ \af \ ist, existiert ein \amm\ $\mu$ 
+ 			\begin{align*}
+	 			\Longrightarrow\pi(\xi^i)=S^i_0=\nicefrac{S^0_0}{S^0_1}\E_{\mu}(S_1^1)=\nicefrac{S^0_0}{S^0_1}\E_{\mu}(\xi^i)\ \forall i\le n 
+	 		\end{align*} 
+	 		und \begin{align*}
+		 		\hat{\pi}(\xi^i\pm\xi^j)=(3.1bzw3.7)=\nicefrac{S_0^0}{S_1^0}\E_{\mu}(\xi^i\pm\xi^j)=\Pi(\xi^i)\pm\Pi(\xi^j)=\Pi_i\pm\Pi_j 
+		 	\end{align*} 
+		 	denn $\xi^i\pm\xi^j$ ist replizierbar mit Portfolio $x=(0,…,0,1d+i,0,…,0,\pm1d+j,0,…,0)$ $\Longrightarrow b$
+ 			\item[a)] 
+	 		\begin{align*}
+		 		\Pi(\xi^j)-\Pi(\xi^i)=(b) \hat{\Pi}(\xi^j-\xi^i)=\nicefrac{S_0^0}{S_1^0}\E_{\mu}(\xi^j-\xi^i)\ge 0 
+		 	\end{align*}
+		 	\qed
+ 		\end{itemize}
+ 	\end{bew}
+ 	\begin{kor}
+ 		Im \af en  \epm \ sei $\pi(\call(K,1,i))$ ein begiebiger \af er  Preis für $\call(K,1,i)$. Dann gilt
+ 		\begin{align*}
+		 	\pi(\call (K,1,i))=S_0^i-\nicefrac{S_0^0}{S_1^0}K+\pi(\put (K,1,i))\qquad\text{Put-Call Parität} 
+		 \end{align*} 
+		 das heißt ein eimal festgelegter Peis von Call bestimmt den Peis von Put und umgekehrt
+ 	\end{kor}
+ 	\begin{bew}
+ 		\begin{align*}
+	 		\put(K,1,i)=(K-S_1^i)_+
+		 \end{align*}
+		 \begin{align*}
+			 \call(K,1,i)=(S^i_1-K)_+=(K-S_1^i)_++S_1^i-K=\put(K,1,i)+S_1^i-K 
+		\end{align*} 
+ 		Sei $\mu(\call)$ ein  \af er Preis. Dann folgt mit 3.18b und $\xi^1=S^i_1,\ \xi^2=\call$ das \begin{align*}
+	 		\Pi(\put(K,1,i))=\Pi(\call(K,1,i))-\pi(S^i_1)+\pi(K)
+	 	\end{align*} 
+	 	mit $\pi(K)=\nicefrac{S_0^0}{S_1^0}K$. \qed
+ 	\end{bew}

@@ -1,0 +1,75 @@
+	\section{Der 1. Hauptsatz der Preistheorie im \epm}
+	\begin{defi}
+		Sei $(\Omega,\F)$ ein Messraum, $\mu$, $\nu$ Maße auf $(\Omega,\F)$. Man nennt $\mu$ absolut stetig bezüglich $\nu$ (schreibe $\mu\ll\nu$), falls gilt: Jede $\nu$-Nullmenge ist auch $\mu$-Nullmenge, d.h.\begin{align*}
+			\forall A\in\F\ \nu(A)=0\Rightarrow\mu(A)=0
+		\end{align*}
+		$\nu$ und $\mu$ sind äquivalent, falls $\nu\ll\mu$ und $\mu\ll\nu$.
+	\end{defi}
+	\begin{defi}
+		Seien $\mu$, $\nu$ Maße und $f\colon\Omega\to\R^+$ messbar. Man sagt, $\mu$ hat Dichte $f$ bezüglich $\nu$ wenn gilt:
+		\begin{align*}
+			\mu(A)=\int_Af(\omega)\nu(\operatorname{d}\omega),\ \forall A\in\F 
+		\end{align*}
+		schreibe $\d\mu=f\d\nu$ oder $f=\nicefrac{\d\mu}{\d\nu}$ oder $\mu=f\nu$.
+	\end{defi}
+	\begin{lem}
+		Seien $f$ und $g$ zwei Dichten von $\mu$ bezüglich $\nu$. Dann ist $f=g\ \nu$f.s. Falls also ein Dichte existiert, ist sie auch fast sicher eindeutig.
+	\end{lem}
+	\begin{bew}
+		Nach Vorraussetzung ist 
+		\begin{align*}
+			&\int_Af\d\nu=\mu(A)=\int_Ag\d \nu\\
+			\Longrightarrow&\int_A(fg)1_A\d\nu=0\ \forall A\in\F\\
+			\intertext{Mit}
+			A&=\{\omega\colon f(\omega)\ge g(\omega)\}\\
+			\intertext{folgt}
+			0&=\int(f-g)1_A\d\nu\\
+			\Longrightarrow&(f-g)1_{(f\ge g)}=0\ \nu f.s.
+		\end{align*}
+		Ebenso:
+		\begin{align*}
+			(f-g)1_{\{f<g \}}=0\ \nu f.s. \Longrightarrow \text{ Behauptung}
+		\end{align*}
+		\qed
+	\end{bew}
+	\begin{lem}
+		Falls $\mu=f\nu$, dann gilt $\mu\ll\nu$
+	\end{lem}
+	\begin{bemerkung}
+		Die Umkehrung gilt auch, falls $\mu$, $\nu$  $\sigma$-endlich sind.
+	\end{bemerkung}
+	\begin{defi}
+		Ein Maß $\mu$ heißt $\sigma$-endlich, wenn es $(A_n)_{n\in\N}\subset\F$ mit $\mu(A_n)<\infty$ und $\bigcup_nA_n=\Omega$ gibt.
+	\end{defi}
+	\begin{satz}[Radon-Nikodym]
+		Seien $\mu$ und $\nu$ zwei $\sigma$-endliche Maße, dann sind Äquivalent:
+		\begin{itemize}
+			\item $\mu$ hat ein Dichte bezüglich $\nu$
+			\item $\mu\ll\nu$
+		\end{itemize}
+	\end{satz}
+	\begin{prop}
+		Seien $\mu\ll\nu$, Dichte $f$, $\mu$ und $\nu$ $\sigma$-endlich. Dann gilt:
+		\begin{align*}
+			\mu\approx\nu\Longleftrightarrow f>0 \ \nu f.s.
+		\end{align*}
+		Falls $\mu\approx\nu$, dann ist $g=\nicefrac{1}{f}$ die Dichte von $\nu$ bezüglich $\mu$.
+	\end{prop}
+	\begin{bew}
+		$\Longleftarrow$:\\ Sei $f>0\ \nu f.s.$. Setze 
+		\begin{align*}
+			g=\mathds{1}_{\{f>0 \}}\nicefrac{1}{f}\Longrightarrow g=\nicefrac{1}{f}\ \nu f.s.
+		\end{align*}
+		Setze $\tilde{\nu}=g\mu$. Dann ist 
+		\begin{align*}
+			\tilde{\nu}=g\mu=gf\nu&\Longrightarrow\tilde{\nu}(A)=\int_Agf\d\nu=\int_A\mathds 1_{\{f>0 \}}\d\nu\qquad \forall A\in\F\\
+			\Longrightarrow\nu=\tilde{\nu}&\Longrightarrow\nu\ll\mu\text{ Dichte }\nicefrac{1}{f}
+		\end{align*}
+		$\Longrightarrow$:\\ Sei $\mu\approx\nu$ und Satz 2.6. Setze $\nu=g\mu$. Dann:
+		\begin{align*}
+			\nu&=g\mu=gf
+			\intertext{ also }
+			\int_A1\d\nu&=\int_Agf\d\nu\qquad\forall A\in\F\\
+			\Longrightarrow gf&=1\ \nu f.s.\longrightarrow f>0\ \nu f.s. \text{ und } g=\nicefrac{1}{f}\ \nu f.s.
+		\end{align*}
+	\end{bew}
